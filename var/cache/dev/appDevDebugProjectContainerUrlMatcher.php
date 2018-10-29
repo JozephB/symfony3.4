@@ -107,20 +107,28 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
 
         }
 
-        // validation_default_index
-        if ('/validation' === $trimmedPathinfo) {
-            $ret = array (  '_controller' => 'ValidationBundle\\Controller\\DefaultController::indexAction',  '_route' => 'validation_default_index',);
-            if ('/' === substr($pathinfo, -1)) {
-                // no-op
-            } elseif ('GET' !== $canonicalMethod) {
-                goto not_validation_default_index;
-            } else {
-                return array_replace($ret, $this->redirect($rawPathinfo.'/', 'validation_default_index'));
+        elseif (0 === strpos($pathinfo, '/validation')) {
+            // validation_default_index
+            if ('/validation' === $trimmedPathinfo) {
+                $ret = array (  '_controller' => 'ValidationBundle\\Controller\\DefaultController::indexAction',  '_route' => 'validation_default_index',);
+                if ('/' === substr($pathinfo, -1)) {
+                    // no-op
+                } elseif ('GET' !== $canonicalMethod) {
+                    goto not_validation_default_index;
+                } else {
+                    return array_replace($ret, $this->redirect($rawPathinfo.'/', 'validation_default_index'));
+                }
+
+                return $ret;
+            }
+            not_validation_default_index:
+
+            // datasource
+            if ('/validation/datasource' === $pathinfo) {
+                return array (  '_controller' => 'ValidationBundle\\Controller\\DefaultController::dataSourceAction',  '_route' => 'datasource',);
             }
 
-            return $ret;
         }
-        not_validation_default_index:
 
         // homepage
         if ('' === $trimmedPathinfo) {

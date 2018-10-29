@@ -31,6 +31,25 @@ class Author
      * @ORM\Column(name="name", type="string", length=255)
      */
     private $name;
+    
+    
+    /**
+     * @var boolean
+     *
+     *
+     * @ORM\Column(name="notification", type="boolean", length=255)
+     */
+    private $notification;
+    
+    
+    
+    /**
+     * @var string
+     *
+     *
+     * @ORM\Column(name="book", type="string", length=255)
+     */
+    private $book;
 
 
     /**
@@ -41,6 +60,52 @@ class Author
     public function getId()
     {
         return $this->id;
+    }
+    
+
+    /**
+     * @return string
+     */
+    public function getBook()
+    {
+        return $this->book;
+    }
+
+    /**
+     * Set book
+     * 
+     * @param string $book
+     * 
+     * @return Author
+     */
+    public function setBook($book)
+    {
+        $this->book = $book;
+        
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isNotification()
+    {
+        return $this->notification;
+    }
+
+    /**
+     * 
+     * Set notification
+     * 
+     * @param boolean $notification
+     * 
+     * @return Author
+     */
+    public function setNotification($notification)
+    {
+        $this->notification = $notification;
+        
+        return $this;
     }
 
     /**
