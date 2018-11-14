@@ -5,36 +5,37 @@ namespace ValidationBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use ValidationBundle\Entity\Author;
+use ValidationBundle\Entity\Book;
 
-
-class AuthorType extends AbstractType
+class ManagerType extends AbstractType
 {
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('firstName')
-        ->add('lastName')->add('email')
-        ->add('username', TextType::class)->add('adress')->add('company')->add('country')->add('postalCode')->add('description');
-    }/**
-     * {@inheritdoc}
-     */
+        
+    }
+    
+   /**
+    * {@inheritdoc}
+    */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ValidationBundle\Entity\Author'
+            'data_class' => 'ValidationBundle\Entity\Manager'
         ));
     }
-
+    
     /**
      * {@inheritdoc}
      */
     public function getBlockPrefix()
     {
-        return 'validationbundle_author';
+        return 'validationbundle_manager';
     }
-
-
+    
+    
 }

@@ -1,8 +1,23 @@
-{% extends "base.html.twig" %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Index{% endblock %}
+{% form_theme edit_form 'bootstrap_4_layout.html.twig' %}
 
+
+{% block stylesheets %}
+{{ parent() }}
+<style type="text/css">
+    .invalid-feedback {
+        display: none;
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 67%;
+        color: #f44336;
+    } 
+</style> 
+{% endblock %}
+        
 {% block body %}
+    <h1>Author edit</h1>
 
         <div class="wrapper ">
     <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
@@ -154,7 +169,7 @@
                 <div class="card-body">
                 
                 <!-- BEGIN : Form -->
-                  <form>
+                  {{ form_start(edit_form) }}
                     <div class="row">
                       <div class="col-md-5">
                         <div class="form-group">
@@ -165,7 +180,8 @@
                       <div class="col-md-3">
                         <div class="form-group">
                           <label class="bmd-label-floating">Username</label>
-                          <input type="text" class="form-control">
+                          {{ form_widget(edit_form.username) }}
+                          {{ form_errors(edit_form.username) }}
                         </div>
                       </div>
                       <div class="col-md-4">
@@ -230,7 +246,9 @@
                     </div>
                     <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
                     <div class="clearfix"></div>
-                  </form>
+                    
+                  {{ form_widget(edit_form._token) }} 
+                  {{ form_end(edit_form, {'render_rest': false}) }}
                  <!-- END : Form -->
                 </div>
               </div>
@@ -361,4 +379,20 @@
     </div>
   </div>
          
+
+    {{ form_start(edit_form) }}
+        {{ form_widget(edit_form) }}
+        <input type="submit" value="Edit" />
+    {{ form_end(edit_form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('author_index') }}">Back to the list</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
 {% endblock %}

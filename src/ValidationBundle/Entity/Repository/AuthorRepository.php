@@ -10,4 +10,19 @@ namespace ValidationBundle\Entity\Repository;
  */
 class AuthorRepository extends \Doctrine\ORM\EntityRepository
 {
+    
+    /**
+     * 
+     * @param array $criteria
+     * 
+     * @return array|NULL
+     */
+    public function findByUniqueCriteria(array $criteria)
+    {
+        if($criteria['notification'] == true){
+            return $this->findBy($criteria);
+        }
+        
+        return  null;
+    }
 }

@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Authors list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>Email</th>
+                <th>Username</th>
+                <th>Adress</th>
+                <th>Company</th>
+                <th>Country</th>
+                <th>Postalcode</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for author in authors %}
+            <tr>
+                <td><a href="{{ path('author_show', { 'id': author.id }) }}">{{ author.id }}</a></td>
+                <td>{{ author.firstName }}</td>
+                <td>{{ author.lastName }}</td>
+                <td>{{ author.email }}</td>
+                <td>{{ author.username }}</td>
+                <td>{{ author.adress }}</td>
+                <td>{{ author.company }}</td>
+                <td>{{ author.country }}</td>
+                <td>{{ author.postalCode }}</td>
+                <td>{{ author.description }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('author_show', { 'id': author.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('author_edit', { 'id': author.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('author_new') }}">Create a new author</a>
+        </li>
+    </ul>
+{% endblock %}
