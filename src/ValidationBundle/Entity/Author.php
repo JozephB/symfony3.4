@@ -13,6 +13,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="author")
  * @ORM\Entity(repositoryClass="ValidationBundle\Entity\Repository\AuthorRepository")
  * 
+ * 
+ * @UniqueEntity(
+ *     fields={"firstName","lastName"},
+ *     errorPath="port",
+ *     message="This {{ value }} is already in use on that host.",
+ *     repositoryMethod="findByUniqueCriteria"
+ * )
+ * 
  */
 class Author
 {
@@ -101,8 +109,27 @@ class Author
      */
     private $description;
     
+    /**
+     * @var string
+     *
+     *
+     * @ORM\Column(name="active", type="boolean", nullable=true)
+     */
+    private $active;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Book", mappedBy="author")
+     */
+    private $books;
     
     
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->books = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -112,6 +139,29 @@ class Author
     public function getId()
     {
         return $this->id;
+    }
+    
+    
+
+    /**
+     * @return string
+     */
+    public function getActive()
+    {
+        return $this->active;
+    }
+
+
+    /**
+     * @param string $active
+     * 
+     * @return Author
+     */
+    public function setActive($active)
+    {
+        $this->active = $active;
+        
+        return $this;     
     }
 
     /**
@@ -328,5 +378,40 @@ class Author
     public function getDescription()
     {
         return $this->description;
+    }
+
+
+    /**
+     * Add book
+     *
+     * @param \ValidationBundle\Entity\Book $book
+     *
+     * @return Author
+     */
+    public function addBook(\ValidationBundle\Entity\Book $book)
+    {
+        $this->books[] = $book;
+
+        return $this;
+    }
+
+    /**
+     * Remove book
+     *
+     * @param \ValidationBundle\Entity\Book $book
+     */
+    public function removeBook(\ValidationBundle\Entity\Book $book)
+    {
+        $this->books->removeElement($book);
+    }
+
+    /**
+     * Get books
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getBooks()
+    {
+        return $this->books;
     }
 }
