@@ -30,7 +30,7 @@ class Book
     private $name;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Author", inversedBy="books")
+     * @ORM\ManyToOne(targetEntity="Author", inversedBy="books", cascade={"persist"})
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
      */
     private $author;
@@ -94,5 +94,14 @@ class Book
     public function getAuthor()
     {
         return $this->author;
+    }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function __toString(){
+        
+        return $this->name;
     }
 }

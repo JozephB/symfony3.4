@@ -87,6 +87,10 @@ class AuthorController extends Controller
         $wasValidated = '';
 
         if ($editForm->isSubmitted()) {
+            
+           /* dump($editForm->getData());
+            exit;*/
+            
             if($editForm->isValid()){
                 $this->getDoctrine()->getManager()->flush();
                 return $this->redirectToRoute('author_edit', array('id' => $author->getId()));

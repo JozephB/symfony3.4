@@ -118,7 +118,7 @@ class Author
     private $active;
     
     /**
-     * @ORM\OneToMany(targetEntity="Book", mappedBy="author")
+     * @ORM\OneToMany(targetEntity="Book", mappedBy="author", cascade={"all"})
      */
     private $books;
     
@@ -390,8 +390,11 @@ class Author
      */
     public function addBook(\ValidationBundle\Entity\Book $book)
     {
-        $this->books[] = $book;
-
+        if (!$this->books->contains($book)) {
+            $this->books[] = $book;
+            $book->setAuthor($this);
+        }
+        
         return $this;
     }
 
@@ -403,6 +406,16 @@ class Author
     public function removeBook(\ValidationBundle\Entity\Book $book)
     {
         $this->books->removeElement($book);
+        
+        if ($this->books->contains($book)) {
+            $this->books->removeElement($book);
+            // set the owning side to null (unless already changed)
+            if ($book->getAuthor() === $this) {
+                $book->setAuthor(null);
+            }
+        }
+        
+        return $this;
     }
 
     /**
@@ -412,6 +425,6 @@ class Author
      */
     public function getBooks()
     {
-        return $this->books;
+        return $this->books->toArray();
     }
 }
