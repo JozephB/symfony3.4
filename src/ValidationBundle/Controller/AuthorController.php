@@ -5,7 +5,9 @@ namespace ValidationBundle\Controller;
 use ValidationBundle\Entity\Author;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use ValidationBundle\Form\Type\OrderType;
 
 /**
  * Author controller.
@@ -141,5 +143,22 @@ class AuthorController extends Controller
             ->setMethod('DELETE')
             ->getForm()
         ;
+    }
+    
+    /**
+     * Displays a form to edit an existing author entity.
+     *
+     * @Route("/edit/shipping_type", name="shipping_type")
+     * @Method({"GET", "POST"})
+     */
+    public function editShippingAction(Request $request)
+    {
+        $editForm = $this->createForm('ValidationBundle\Form\Type\OrderType');
+        $editForm->handleRequest($request);
+
+        
+        return $this->render('author/edit.html.twig', array(
+            'edit_form' => $editForm->createView(),
+        ));
     }
 }

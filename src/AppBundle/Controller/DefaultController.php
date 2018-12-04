@@ -22,6 +22,32 @@ class DefaultController extends Controller
     }
     
     /**
+     * @Route("/extension/{name}", name="extension")
+     */
+    public function extensionAction(Request $request)
+    {
+        return $this->render('extensions/index.html.twig', 
+            array('name'   => $request->get('name'),
+                  'adulte' => true,
+            ));
+    }
+    
+    /**
+     * @Route("/curl", name="curl")
+     */
+    public function cURLAction(Request $request)
+    {
+        $cURL = $this->container->get('app.curl');
+        
+        $response = $cURL->get('https://jsonplaceholder.typicode.com/todos/',['p' => 'n']);
+        
+        dump($response);
+        
+        exit;
+    }
+   
+    
+    /**
      * @Route("/validateAuthor", name="validate_author")
      */
     public function validateAuthorAction(Request $request)

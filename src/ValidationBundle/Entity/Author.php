@@ -118,6 +118,14 @@ class Author
     private $active;
     
     /**
+     * @var string
+     *
+     *
+     * @ORM\Column(name="age", type="integer", nullable=true)
+     */
+    private $age;
+    
+    /**
      * @ORM\OneToMany(targetEntity="Book", mappedBy="author", cascade={"all"})
      */
     private $books;
@@ -142,6 +150,23 @@ class Author
     }
     
     
+    
+
+    /**
+     * @return string
+     */
+    public function getAge()
+    {
+        return $this->age;
+    }
+
+    /**
+     * @param string $age
+     */
+    public function setAge($age)
+    {
+        $this->age = $age;
+    }
 
     /**
      * @return string

@@ -34,7 +34,13 @@ class AuthorType extends AbstractType
         ))
         ->add('firstName')
         ->add('lastName')->add('email')
-        ->add('username', TextType::class)->add('adress')->add('company')->add('country')->add('postalCode')->add('description');
+        ->add('username', TextType::class)
+        ->add('adress')
+        ->add('company')
+        ->add('country')
+        ->add('postalCode')
+        ->add('description')
+        ->add('age');
         
         
       /*  $builder->addEventListener(FormEvents::POST_SUBMIT, function(FormEvent $event){
